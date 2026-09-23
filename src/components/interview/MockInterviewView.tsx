@@ -57,33 +57,33 @@ export const MockInterviewView: React.FC = () => {
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-16">
       {/* Header Banner */}
-      <div className="p-6 md:p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="p-6 md:p-8 rounded-3xl bg-stone-900/80 border border-stone-800 shadow-xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-xs font-bold tracking-wide">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/15 border border-orange-500/30 text-orange-300 text-xs font-bold tracking-wide">
               <Mic className="w-3.5 h-3.5" />
               <span>MCA ADMISSIONS & TECHNICAL ROUNDS</span>
             </div>
             <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
               Mock Technical Interview
             </h1>
-            <p className="text-sm text-slate-300 max-w-xl leading-relaxed">
+            <p className="text-sm text-stone-300 max-w-xl leading-relaxed">
               Real-world technical interview questions categorized across all 9 subjects,
               including architecture follow-ups and project defense scenarios.
             </p>
           </div>
 
           {/* Readiness Gauge */}
-          <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-center gap-4 shrink-0 shadow-inner">
-            <div className="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-black text-lg">
+          <div className="p-4 rounded-2xl bg-stone-950/80 border border-stone-800 flex items-center gap-4 shrink-0 shadow-inner">
+            <div className="w-12 h-12 rounded-xl bg-orange-500/20 text-orange-300 flex items-center justify-center font-black text-lg">
               {readinessPercent}%
             </div>
             <div>
               <div className="text-xs font-bold text-white uppercase tracking-wider">
                 Interview Readiness
               </div>
-              <div className="text-[11px] text-slate-400 mt-0.5">
+              <div className="text-[11px] text-stone-400 mt-0.5">
                 {masteredCount} Mastered • {reviewCount} Need Review
               </div>
             </div>
@@ -101,8 +101,8 @@ export const MockInterviewView: React.FC = () => {
               onClick={() => setSelectedCategory(cat.id)}
               className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
                 isSelected
-                  ? 'bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/20'
-                  : 'bg-slate-900 text-slate-400 border-slate-800 hover:border-slate-700'
+                  ? 'bg-red-600 text-white border-red-500 shadow-md shadow-red-600/20'
+                  : 'bg-stone-900 text-stone-400 border-stone-800 hover:border-stone-700'
               }`}
             >
               {cat.label}
@@ -120,15 +120,15 @@ export const MockInterviewView: React.FC = () => {
           return (
             <div
               key={item.id}
-              className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-750 transition-all space-y-4 shadow-lg"
+              className="p-6 rounded-2xl bg-stone-900/80 border border-stone-800 hover:border-stone-700 transition-all space-y-4 shadow-lg"
             >
               {/* Question Header & Badges */}
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-md bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-[11px] font-bold">
+                  <span className="px-2.5 py-0.5 rounded-md bg-red-500/15 border border-red-500/30 text-red-300 text-[11px] font-bold">
                     {item.categoryName}
                   </span>
-                  <span className="px-2 py-0.5 rounded-md bg-slate-800 text-slate-400 text-[10px] font-semibold">
+                  <span className="px-2 py-0.5 rounded-md bg-stone-800 text-stone-400 text-[10px] font-semibold">
                     {item.type}
                   </span>
                   <span
@@ -169,7 +169,7 @@ export const MockInterviewView: React.FC = () => {
                   {item.question}
                 </h3>
                 {item.context && (
-                  <p className="text-xs text-slate-400 mt-1 italic">Context: {item.context}</p>
+                  <p className="text-xs text-stone-400 mt-1 italic">Context: {item.context}</p>
                 )}
               </div>
 
@@ -179,8 +179,8 @@ export const MockInterviewView: React.FC = () => {
                   onClick={() => toggleReveal(item.id)}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                     isRevealed
-                      ? 'bg-slate-800 text-slate-300 border border-slate-700'
-                      : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/20'
+                      ? 'bg-stone-800 text-stone-300 border border-stone-700'
+                      : 'bg-red-600 hover:bg-red-500 text-white shadow-md shadow-red-600/20'
                   }`}
                 >
                   {isRevealed ? (
@@ -199,23 +199,23 @@ export const MockInterviewView: React.FC = () => {
 
               {/* Hidden Answer Content (Revealed after clicking "Show Answer") */}
               {isRevealed && (
-                <div className="pt-4 border-t border-slate-800 space-y-4 animate-fadeIn">
+                <div className="pt-4 border-t border-stone-800 space-y-4 animate-fadeIn">
                   {/* Model Answer */}
-                  <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
-                    <span className="text-xs font-bold text-indigo-300 uppercase tracking-wider block">
+                  <div className="p-4 rounded-xl bg-stone-950/80 border border-stone-800 space-y-2">
+                    <span className="text-xs font-bold text-red-300 uppercase tracking-wider block">
                       Model Technical Answer
                     </span>
-                    <p className="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">
+                    <p className="text-xs sm:text-sm text-stone-200 leading-relaxed whitespace-pre-line">
                       {item.modelAnswer}
                     </p>
                   </div>
 
                   {/* Key Points To Mention */}
-                  <div className="p-4 rounded-xl bg-slate-950/40 border border-slate-850 space-y-2">
+                  <div className="p-4 rounded-xl bg-stone-950/40 border border-stone-800/80 space-y-2">
                     <span className="text-xs font-bold text-amber-300 uppercase tracking-wider block">
                       Key Points Interviewers Listen For:
                     </span>
-                    <ul className="space-y-1 text-xs text-slate-300">
+                    <ul className="space-y-1 text-xs text-stone-300">
                       {item.keyPointsToMention.map((pt, pIdx) => (
                         <li key={pIdx} className="flex items-start gap-2">
                           <span className="text-amber-400 font-bold">•</span>
@@ -227,17 +227,17 @@ export const MockInterviewView: React.FC = () => {
 
                   {/* Follow-up question if present */}
                   {item.followUpQuestion && (
-                    <div className="p-4 rounded-xl bg-indigo-950/20 border border-indigo-500/20 space-y-1.5 text-xs">
-                      <span className="font-bold text-indigo-300 block">
+                    <div className="p-4 rounded-xl bg-red-950/20 border border-red-500/20 space-y-1.5 text-xs">
+                      <span className="font-bold text-red-300 block">
                         Interviewer Follow-up: {item.followUpQuestion}
                       </span>
-                      <p className="text-slate-300 leading-relaxed">{item.followUpAnswer}</p>
+                      <p className="text-stone-300 leading-relaxed">{item.followUpAnswer}</p>
                     </div>
                   )}
 
                   {/* Self Assessment Rating Buttons */}
                   <div className="pt-2 flex items-center justify-between flex-wrap gap-3">
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    <span className="text-xs font-bold text-stone-400 uppercase tracking-wider">
                       Self Assessment:
                     </span>
                     <div className="flex items-center gap-2">
@@ -246,7 +246,7 @@ export const MockInterviewView: React.FC = () => {
                         className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 ${
                           rating === 'mastered'
                             ? 'bg-emerald-500 text-white border-emerald-400 shadow-md shadow-emerald-500/30'
-                            : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-emerald-500/50'
+                            : 'bg-stone-800 text-stone-300 border-stone-700 hover:border-emerald-500/50'
                         }`}
                       >
                         <Check className="w-3.5 h-3.5" />
@@ -257,8 +257,8 @@ export const MockInterviewView: React.FC = () => {
                         onClick={() => rateInterviewQuestion(item.id, 'review')}
                         className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 ${
                           rating === 'review'
-                            ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md shadow-amber-500/30'
-                            : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-amber-500/50'
+                            ? 'bg-amber-500 text-stone-950 border-amber-400 shadow-md shadow-amber-500/30'
+                            : 'bg-stone-800 text-stone-300 border-stone-700 hover:border-amber-500/50'
                         }`}
                       >
                         <AlertCircle className="w-3.5 h-3.5" />
@@ -270,7 +270,7 @@ export const MockInterviewView: React.FC = () => {
                         className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 ${
                           rating === 'struggled'
                             ? 'bg-rose-500 text-white border-rose-400 shadow-md shadow-rose-500/30'
-                            : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-rose-500/50'
+                            : 'bg-stone-800 text-stone-300 border-stone-700 hover:border-rose-500/50'
                         }`}
                       >
                         <XCircle className="w-3.5 h-3.5" />

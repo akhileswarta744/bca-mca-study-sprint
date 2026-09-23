@@ -53,41 +53,41 @@ export const MobileNav: React.FC<MobileNavProps> = ({
       />
 
       {/* Drawer */}
-      <div className="relative w-4/5 max-w-xs bg-[#0c121e] border-r border-slate-800 p-5 flex flex-col h-full z-10 shadow-2xl">
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+      <div className="relative w-4/5 max-w-xs bg-[#130e0d] border-r border-stone-800 p-5 flex flex-col h-full z-10 shadow-2xl">
+        <div className="flex items-center justify-between pb-4 border-b border-stone-800">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-bold text-white">
+            <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center font-bold text-white">
               Σ
             </div>
             <div>
               <h2 className="text-sm font-bold text-white">BCA → MCA Sprint</h2>
-              <p className="text-[10px] text-slate-400">16-Day Intensive Prep</p>
+              <p className="text-[10px] text-stone-400">16-Day Intensive Prep</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+            className="p-1 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Quick Stats in Mobile Drawer */}
-        <div className="py-3 my-2 px-3 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+        <div className="py-3 my-2 px-3 rounded-xl bg-stone-900 border border-stone-800 text-xs">
           <div className="flex justify-between items-center text-amber-400 font-bold mb-1.5">
             <span className="flex items-center gap-1">
               <Flame className="w-3.5 h-3.5 fill-amber-400" />
               {streak.count} Day Streak
             </span>
-            <span className="text-slate-400">Day {currentDay}/16</span>
+            <span className="text-stone-400">Day {currentDay}/16</span>
           </div>
-          <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+          <div className="w-full bg-stone-800 h-1.5 rounded-full overflow-hidden">
             <div
-              className="bg-indigo-500 h-full rounded-full"
+              className="bg-red-500 h-full rounded-full"
               style={{ width: `${overallProgressPercentage}%` }}
             />
           </div>
-          <p className="text-[10px] text-slate-400 mt-1">
+          <p className="text-[10px] text-stone-400 mt-1">
             Completion: <strong className="text-white">{overallProgressPercentage}%</strong>
           </p>
         </div>
@@ -106,11 +106,11 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                 }}
                 className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all ${
                   isActive
-                    ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-850'
+                    ? 'bg-red-600/20 text-red-300 border border-red-500/30'
+                    : 'text-stone-400 hover:text-white hover:bg-stone-800/80'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-indigo-400' : 'text-slate-400'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-red-400' : 'text-stone-400'}`} />
                 <span>{item.label}</span>
               </button>
             );

@@ -46,8 +46,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   } = useProgress();
 
   const todayPlan = STUDY_DAYS.find((d) => d.day === currentDay) || STUDY_DAYS[0];
-
-  // Calculate day tasks completion count
   const todayTasks = todayPlan.tasks;
   const completedTodayTasksCount = todayTasks.filter(
     (t) => !!dayTasksCompleted[t.id]
@@ -56,35 +54,30 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     (completedTodayTasksCount / (todayTasks.length || 1)) * 100
   );
 
+  const upcomingDays = 16 - currentDay;
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
-      {/* Hero Sprint Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-950 via-[#0e1628] to-[#0a0f1d] border border-indigo-500/20 p-6 md:p-8 shadow-2xl">
-        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 -mb-12 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-bold tracking-wide">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>16-DAY SPRINT ACTIVE</span>
-              <span className="text-indigo-400/60">•</span>
-              <span>DAY {currentDay} OF 16</span>
+      {/* Row 1: Three-column hero section */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        {/* Left card (greeting) */}
+        <div className="p-6 md:p-8 rounded-3xl bg-[#1a1110] border border-stone-800/60 shadow-xl flex flex-col justify-between space-y-6">
+          <div>
+            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold tracking-wide">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              Active learner
             </div>
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
-              BCA <span className="text-indigo-400">→</span> MCA Study Sprint
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight mb-3">
+              Hello AKHILESWAR,
             </h1>
-            <p className="text-sm md:text-base text-slate-300 leading-relaxed font-normal">
-              Intensive Computer Science fundamentals revision for postgraduate readiness.
-              Focusing on 9 core academic subjects with zero fluff.
+            <p className="text-sm md:text-base text-stone-400 leading-relaxed font-normal">
+              It's good to see you again. Keep going — every lesson moves you closer to mastery.
             </p>
           </div>
-
-          {/* Quick Action Button */}
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
+          <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={() => {
-                // Find first incomplete topic for today
                 const firstTopic = todayTasks.find((t) => t.topicId)?.topicId;
                 if (firstTopic) {
                   onOpenTopic(firstTopic);
@@ -92,105 +85,138 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   setActiveTab('plan');
                 }
               }}
-              className="flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm shadow-xl shadow-indigo-600/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-bold text-sm shadow-xl shadow-red-900/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
-              <span>Continue Studying</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>Continue Learning &rarr;</span>
             </button>
             <button
               onClick={() => setActiveTab('plan')}
-              className="px-5 py-3.5 rounded-2xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 font-semibold text-sm transition-all"
+              className="px-5 py-3.5 rounded-2xl bg-transparent hover:bg-stone-800/50 text-stone-300 hover:text-white border border-stone-700 font-semibold text-sm transition-all"
             >
-              Today's Plan
+              View Schedule
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Metrics Row: 4 Essential Status Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Metric 1: Current Sprint Day */}
-        <div className="p-5 rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-sm relative group hover:border-slate-700 transition-all">
-          <div className="flex items-center justify-between text-slate-400 mb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider">Current Day</span>
-            <Calendar className="w-4 h-4 text-indigo-400" />
+        {/* Center card (overall progress) */}
+        <div className="p-6 md:p-8 rounded-3xl bg-[#1a1110] border border-stone-800/60 shadow-xl flex flex-col items-center justify-center relative">
+          <div className="absolute top-6 left-6 text-stone-400 text-sm font-semibold flex items-center gap-1">
+            <TrendingUp className="w-4 h-4" /> Overall
           </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-white">Day {currentDay}</span>
-            <span className="text-xs text-slate-400 font-medium">/ 16</span>
+          <div className="relative flex items-center justify-center mt-4">
+            <svg className="w-32 h-32" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="54" fill="none" stroke="currentColor" strokeWidth="8" className="text-stone-800" />
+              <circle cx="60" cy="60" r="54" fill="none" stroke="currentColor" strokeWidth="8" className="text-red-500 transition-all duration-1000 ease-out"
+                strokeDasharray="339.292" strokeDashoffset={339.292 * (1 - (overallProgressPercentage || 0) / 100)}
+                strokeLinecap="round" transform="rotate(-90 60 60)" />
+            </svg>
+            <div className="absolute flex flex-col items-center justify-center">
+              <span className="text-3xl font-black text-white">{overallProgressPercentage || 0}%</span>
+            </div>
           </div>
-          <div className="mt-3 flex items-center gap-1.5 text-xs text-indigo-400 font-medium truncate">
-            <span>{todayPlan.title.split('—')[0]}</span>
-          </div>
+          <p className="text-stone-400 text-sm mt-4 font-medium">
+            {Math.min(9, Math.ceil(((overallProgressPercentage || 0) / 100) * 9))} of 9 subjects on track
+          </p>
         </div>
 
-        {/* Metric 2: Overall Progress */}
-        <div className="p-5 rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-sm relative group hover:border-slate-700 transition-all">
-          <div className="flex items-center justify-between text-slate-400 mb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider">Overall Progress</span>
-            <Target className="w-4 h-4 text-cyan-400" />
+        {/* Right card (user profile) */}
+        <div className="p-6 md:p-8 rounded-3xl bg-[#1a1110] border border-stone-800/60 shadow-xl flex flex-col space-y-6">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-full bg-purple-600 flex items-center justify-center text-white text-xl font-bold shrink-0">
+              A
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-white">AKHILESWAR T A</h3>
+              <div className="flex items-center gap-1.5 text-stone-400 text-xs font-medium mt-1">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span> Student
+              </div>
+            </div>
           </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-cyan-300">{overallProgressPercentage}%</span>
-            <span className="text-xs text-slate-400">Complete</span>
+          
+          <div className="grid grid-cols-3 gap-2">
+            <div className="bg-[#2a1f1e]/50 rounded-xl p-2 text-center">
+              <div className="text-stone-400 text-[10px] uppercase font-bold tracking-wider mb-1">Subjects</div>
+              <div className="text-white font-bold">9</div>
+            </div>
+            <div className="bg-[#2a1f1e]/50 rounded-xl p-2 text-center">
+              <div className="text-stone-400 text-[10px] uppercase font-bold tracking-wider mb-1">Progress</div>
+              <div className="text-white font-bold">{overallProgressPercentage}%</div>
+            </div>
+            <div className="bg-[#2a1f1e]/50 rounded-xl p-2 text-center">
+              <div className="text-stone-400 text-[10px] uppercase font-bold tracking-wider mb-1">Certs</div>
+              <div className="text-white font-bold">0</div>
+            </div>
           </div>
-          <div className="mt-3 w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-            <div
-              className="bg-cyan-400 h-full rounded-full transition-all duration-500"
-              style={{ width: `${overallProgressPercentage}%` }}
-            />
-          </div>
-        </div>
 
-        {/* Metric 3: Topics Completed vs Remaining */}
-        <div className="p-5 rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-sm relative group hover:border-slate-700 transition-all">
-          <div className="flex items-center justify-between text-slate-400 mb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider">Topics Status</span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-emerald-400">{totalTopicsCompleted}</span>
-            <span className="text-xs text-slate-400 font-medium">done / {totalTopicsRemaining} left</span>
-          </div>
-          <div className="mt-3 text-xs text-slate-400">
-            {TOPICS_META.length} total core topics
-          </div>
-        </div>
-
-        {/* Metric 4: Study Streak */}
-        <div className="p-5 rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-sm relative group hover:border-slate-700 transition-all">
-          <div className="flex items-center justify-between text-slate-400 mb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider">Study Streak</span>
-            <Flame className="w-4 h-4 text-amber-500 fill-amber-500" />
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-amber-400">{streak.count}</span>
-            <span className="text-xs text-slate-400">Consecutive Days</span>
-          </div>
-          <div className="mt-3 text-xs text-amber-300/80 font-medium flex items-center gap-1">
-            <span>Keep the momentum alive!</span>
+          <div className="mt-auto pt-4 border-t border-stone-800/60">
+            <div className="bg-red-500/10 rounded-xl p-4 border border-red-500/20">
+              <div className="text-red-400 text-[10px] uppercase font-bold tracking-wider mb-2">Featured Subject</div>
+              <div className="text-white font-bold text-sm mb-2 truncate">{todayPlan.subjectNames[0] || 'Core Subject'}</div>
+              <div className="w-full bg-stone-900 rounded-full h-1.5 overflow-hidden">
+                <div
+                  className="bg-red-500 h-full rounded-full transition-all duration-500"
+                  style={{ width: `${dayProgressPercent}%` }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Main Grid: Today's Focus & Tasks (Left) + Quick Actions, Weak Topics & Quiz (Right) */}
+      {/* Row 2: Three stat cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Enrolled Subjects */}
+        <div className="p-5 rounded-2xl bg-[#1a1110] border border-stone-800/60 shadow-sm flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-stone-800/50 flex items-center justify-center shrink-0">
+            <BookOpen className="w-6 h-6 text-stone-300" />
+          </div>
+          <div>
+            <div className="text-stone-400 text-xs font-semibold uppercase tracking-wider mb-1">Enrolled Subjects</div>
+            <div className="text-2xl font-black text-white">09</div>
+          </div>
+        </div>
+
+        {/* Upcoming Days */}
+        <div className="p-5 rounded-2xl bg-[#1a1110] border border-stone-800/60 shadow-sm flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-stone-800/50 flex items-center justify-center shrink-0">
+            <Calendar className="w-6 h-6 text-stone-300" />
+          </div>
+          <div>
+            <div className="text-stone-400 text-xs font-semibold uppercase tracking-wider mb-1">Upcoming Days</div>
+            <div className="text-2xl font-black text-white">{upcomingDays}</div>
+          </div>
+        </div>
+
+        {/* Topics Completed */}
+        <div className="p-5 rounded-2xl bg-[#1a1110] border border-stone-800/60 shadow-sm flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-stone-800/50 flex items-center justify-center shrink-0">
+            <CheckCircle2 className="w-6 h-6 text-stone-300" />
+          </div>
+          <div>
+            <div className="text-stone-400 text-xs font-semibold uppercase tracking-wider mb-1">Topics Completed</div>
+            <div className="text-2xl font-black text-white">{totalTopicsCompleted}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Row 3: Two-column layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* LEFT COLUMN (7 Cols): Today's Schedule & Action Checklist */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 shadow-xl space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800/80">
+          <div className="p-6 rounded-2xl bg-[#1a1110] border border-stone-800/60 shadow-xl space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-stone-800/60">
               <div>
-                <span className="text-xs font-bold text-indigo-400 tracking-wider uppercase">
+                <span className="text-xs font-bold text-red-400 tracking-wider uppercase">
                   Day {currentDay} Focus
                 </span>
                 <h2 className="text-xl font-black text-white mt-0.5">{todayPlan.title}</h2>
-                <p className="text-xs text-slate-400 mt-1">{todayPlan.subtitle}</p>
+                <p className="text-xs text-stone-400 mt-1">{todayPlan.subtitle}</p>
               </div>
 
               {/* Progress pill for today's tasks */}
-              <div className="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700/60 self-start sm:self-auto">
+              <div className="flex items-center gap-2 bg-[#2a1f1e]/50 px-3 py-1.5 rounded-xl border border-stone-700/60 self-start sm:self-auto">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs font-bold text-slate-200">
+                <span className="text-xs font-bold text-stone-200">
                   {completedTodayTasksCount}/{todayTasks.length} Tasks
                 </span>
                 <span className="text-xs text-emerald-400 font-extrabold">({dayProgressPercent}%)</span>
@@ -199,14 +225,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
             {/* Today's Subjects Tag */}
             <div>
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-2">
+              <span className="text-xs font-semibold text-stone-400 uppercase tracking-wider block mb-2">
                 Today's Subjects
               </span>
               <div className="flex flex-wrap gap-2">
                 {todayPlan.subjectNames.map((name, i) => (
                   <span
                     key={i}
-                    className="px-3 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 font-semibold text-xs flex items-center gap-1.5"
+                    className="px-3 py-1 rounded-lg bg-red-500/10 border border-red-500/20 text-red-300 font-semibold text-xs flex items-center gap-1.5"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     {name}
@@ -217,7 +243,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
             {/* Today's Interactive Tasks Checklist */}
             <div className="space-y-3">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">
+              <span className="text-xs font-semibold text-stone-400 uppercase tracking-wider block">
                 Today's Tasks Checklist
               </span>
               <div className="space-y-2">
@@ -231,8 +257,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       key={task.id}
                       className={`flex items-start gap-3 p-3.5 rounded-xl border transition-all ${
                         isChecked
-                          ? 'bg-slate-900/40 border-slate-800/60 opacity-80'
-                          : 'bg-slate-850/60 border-slate-750 hover:border-slate-700'
+                          ? 'bg-[#0f0a09]/80 border-stone-800/60 opacity-80'
+                          : 'bg-[#2a1f1e]/40 border-stone-800 hover:border-stone-700'
                       }`}
                     >
                       <button
@@ -240,7 +266,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                         className={`mt-0.5 w-5 h-5 rounded-md flex items-center justify-center border transition-all shrink-0 ${
                           isChecked
                             ? 'bg-emerald-500 border-emerald-500 text-white shadow-sm shadow-emerald-500/30'
-                            : 'border-slate-600 hover:border-indigo-400 bg-slate-900'
+                            : 'border-stone-600 hover:border-red-400 bg-[#1a1110]'
                         }`}
                         aria-label={`Toggle task ${task.title}`}
                       >
@@ -251,7 +277,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                         <div className="flex items-center justify-between gap-2">
                           <p
                             className={`text-sm font-medium leading-snug cursor-pointer ${
-                              isChecked ? 'line-through text-slate-400' : 'text-slate-200'
+                              isChecked ? 'line-through text-stone-500' : 'text-stone-200'
                             }`}
                             onClick={() => toggleDayTask(task.id)}
                           >
@@ -261,7 +287,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                           {task.topicId && (
                             <button
                               onClick={() => onOpenTopic(task.topicId!)}
-                              className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white transition-all shrink-0 border border-indigo-500/30"
+                              className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white transition-all shrink-0 border border-red-500/30"
                             >
                               Study
                             </button>
@@ -269,7 +295,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                         </div>
 
                         {topicMeta && (
-                          <div className="flex items-center gap-2 mt-1 text-[11px] text-slate-400">
+                          <div className="flex items-center gap-2 mt-1 text-[11px] text-stone-400">
                             <span className="capitalize">{topicMeta.difficulty}</span>
                             <span>•</span>
                             <span>~{topicMeta.estimatedMinutes} mins</span>
@@ -282,7 +308,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                                       ? 'text-emerald-400 font-medium'
                                       : status === 'in_progress'
                                       ? 'text-amber-400 font-medium'
-                                      : 'text-slate-400'
+                                      : 'text-stone-400'
                                   }
                                 >
                                   {status === 'completed'
@@ -307,8 +333,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* RIGHT COLUMN (5 Cols): Quick Actions, Recent Quiz & Weak Topics */}
         <div className="lg:col-span-5 space-y-6">
           {/* Quick Actions Panel */}
-          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 shadow-xl space-y-3">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+          <div className="p-6 rounded-2xl bg-[#1a1110] border border-stone-800/60 shadow-xl space-y-3">
+            <h3 className="text-xs font-bold text-stone-400 uppercase tracking-wider">
               Quick Actions
             </h3>
             <div className="grid grid-cols-2 gap-2.5">
@@ -318,79 +344,79 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   if (firstTopic) onOpenTopic(firstTopic);
                   else setActiveTab('learn');
                 }}
-                className="p-3.5 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-750 hover:border-indigo-500/40 text-left transition-all group"
+                className="p-3.5 rounded-xl bg-[#2a1f1e]/40 hover:bg-[#2a1f1e] border border-stone-800 hover:border-red-500/40 text-left transition-all group"
               >
-                <GraduationCap className="w-5 h-5 text-indigo-400 mb-2 group-hover:scale-110 transition-transform" />
+                <GraduationCap className="w-5 h-5 text-red-400 mb-2 group-hover:scale-110 transition-transform" />
                 <div className="text-xs font-bold text-white">Continue Studying</div>
-                <div className="text-[11px] text-slate-400 mt-0.5">Jump to lesson</div>
+                <div className="text-[11px] text-stone-400 mt-0.5">Jump to lesson</div>
               </button>
 
               <button
                 onClick={() => setActiveTab('plan')}
-                className="p-3.5 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-750 hover:border-cyan-500/40 text-left transition-all group"
+                className="p-3.5 rounded-xl bg-[#2a1f1e]/40 hover:bg-[#2a1f1e] border border-stone-800 hover:border-orange-500/40 text-left transition-all group"
               >
-                <Calendar className="w-5 h-5 text-cyan-400 mb-2 group-hover:scale-110 transition-transform" />
+                <Calendar className="w-5 h-5 text-orange-400 mb-2 group-hover:scale-110 transition-transform" />
                 <div className="text-xs font-bold text-white">Today's Plan</div>
-                <div className="text-[11px] text-slate-400 mt-0.5">16-Day schedule</div>
+                <div className="text-[11px] text-stone-400 mt-0.5">16-Day schedule</div>
               </button>
 
               <button
                 onClick={() => setActiveTab('practice')}
-                className="p-3.5 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-750 hover:border-amber-500/40 text-left transition-all group"
+                className="p-3.5 rounded-xl bg-[#2a1f1e]/40 hover:bg-[#2a1f1e] border border-stone-800 hover:border-amber-500/40 text-left transition-all group"
               >
                 <Sparkles className="w-5 h-5 text-amber-400 mb-2 group-hover:scale-110 transition-transform" />
                 <div className="text-xs font-bold text-white">Practice Questions</div>
-                <div className="text-[11px] text-slate-400 mt-0.5">Take a custom quiz</div>
+                <div className="text-[11px] text-stone-400 mt-0.5">Take a custom quiz</div>
               </button>
 
               <button
                 onClick={() => setActiveTab('subjects')}
-                className="p-3.5 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-750 hover:border-emerald-500/40 text-left transition-all group"
+                className="p-3.5 rounded-xl bg-[#2a1f1e]/40 hover:bg-[#2a1f1e] border border-stone-800 hover:border-emerald-500/40 text-left transition-all group"
               >
                 <BookOpen className="w-5 h-5 text-emerald-400 mb-2 group-hover:scale-110 transition-transform" />
                 <div className="text-xs font-bold text-white">View Subjects</div>
-                <div className="text-[11px] text-slate-400 mt-0.5">9 Subject Explorer</div>
+                <div className="text-[11px] text-stone-400 mt-0.5">9 Subject Explorer</div>
               </button>
 
               <button
                 onClick={() => setActiveTab('progress')}
-                className="p-3.5 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-750 hover:border-violet-500/40 text-left transition-all group"
+                className="p-3.5 rounded-xl bg-[#2a1f1e]/40 hover:bg-[#2a1f1e] border border-stone-800 hover:border-violet-500/40 text-left transition-all group"
               >
                 <BarChart className="w-5 h-5 text-violet-400 mb-2 group-hover:scale-110 transition-transform" />
                 <div className="text-xs font-bold text-white">View Progress</div>
-                <div className="text-[11px] text-slate-400 mt-0.5">Stats & charts</div>
+                <div className="text-[11px] text-stone-400 mt-0.5">Stats & charts</div>
               </button>
 
               <button
                 onClick={() => setActiveTab('notes')}
-                className="p-3.5 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-750 hover:border-rose-500/40 text-left transition-all group"
+                className="p-3.5 rounded-xl bg-[#2a1f1e]/40 hover:bg-[#2a1f1e] border border-stone-800 hover:border-rose-500/40 text-left transition-all group"
               >
                 <StickyNote className="w-5 h-5 text-rose-400 mb-2 group-hover:scale-110 transition-transform" />
                 <div className="text-xs font-bold text-white">Notes</div>
-                <div className="text-[11px] text-slate-400 mt-0.5">Personal notebook</div>
+                <div className="text-[11px] text-stone-400 mt-0.5">Personal notebook</div>
               </button>
             </div>
           </div>
 
           {/* Recent Quiz Performance Card */}
-          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 shadow-xl space-y-4">
+          <div className="p-6 rounded-2xl bg-[#1a1110] border border-stone-800/60 shadow-xl space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+              <span className="text-xs font-bold text-stone-400 uppercase tracking-wider">
                 Recent Quiz Performance
               </span>
               <button
                 onClick={() => setActiveTab('practice')}
-                className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1"
+                className="text-xs font-semibold text-red-400 hover:text-red-300 flex items-center gap-1"
               >
                 Take Quiz <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
             {recentQuiz ? (
-              <div className="p-4 rounded-xl bg-slate-850 border border-slate-750 flex items-center justify-between">
+              <div className="p-4 rounded-xl bg-[#2a1f1e]/40 border border-stone-800 flex items-center justify-between">
                 <div>
                   <div className="text-sm font-bold text-white">{recentQuiz.subjectName}</div>
-                  <div className="text-xs text-slate-400 mt-0.5">
+                  <div className="text-xs text-stone-400 mt-0.5">
                     {recentQuiz.correctAnswers} / {recentQuiz.totalQuestions} correct •{' '}
                     {Math.round(recentQuiz.timeSpentSeconds / 60)}m spent
                   </div>
@@ -402,24 +428,24 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                         ? 'text-emerald-400'
                         : recentQuiz.scorePercentage >= 60
                         ? 'text-amber-400'
-                        : 'text-rose-400'
+                        : 'text-red-400'
                     }`}
                   >
                     {recentQuiz.scorePercentage}%
                   </div>
-                  <span className="text-[10px] text-slate-400 font-semibold uppercase">Score</span>
+                  <span className="text-[10px] text-stone-400 font-semibold uppercase">Score</span>
                 </div>
               </div>
             ) : (
-              <div className="p-4 rounded-xl bg-slate-850/60 border border-slate-800 text-center py-6">
-                <Sparkles className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                <p className="text-sm font-medium text-slate-300">No quizzes taken yet</p>
-                <p className="text-xs text-slate-400 mt-1 mb-3">
+              <div className="p-4 rounded-xl bg-[#2a1f1e]/30 border border-stone-800/60 text-center py-6">
+                <Sparkles className="w-8 h-8 text-stone-500 mx-auto mb-2" />
+                <p className="text-sm font-medium text-stone-300">No quizzes taken yet</p>
+                <p className="text-xs text-stone-400 mt-1 mb-3">
                   Test your concepts with 10 to 75 question practice drills.
                 </p>
                 <button
                   onClick={() => setActiveTab('practice')}
-                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md shadow-indigo-600/20"
+                  className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold shadow-md shadow-red-900/20"
                 >
                   Start Practice Quiz
                 </button>
@@ -428,7 +454,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
 
           {/* Weakest Topics Alert Card */}
-          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 shadow-xl space-y-4">
+          <div className="p-6 rounded-2xl bg-[#1a1110] border border-stone-800/60 shadow-xl space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-amber-400" />
@@ -436,7 +462,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   Weakest Topics
                 </span>
               </div>
-              <span className="text-[11px] font-semibold text-slate-400">
+              <span className="text-[11px] font-semibold text-stone-400">
                 {weakTopicsList.length} flagged
               </span>
             </div>
@@ -446,11 +472,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 {weakTopicsList.slice(0, 4).map((weak) => (
                   <div
                     key={weak.id}
-                    className="flex items-center justify-between p-3 rounded-xl bg-slate-850/80 border border-slate-750 hover:border-slate-700 transition-all"
+                    className="flex items-center justify-between p-3 rounded-xl bg-[#2a1f1e]/40 border border-stone-800 hover:border-stone-700 transition-all"
                   >
                     <div className="min-w-0 pr-2">
-                      <p className="text-xs font-bold text-slate-200 truncate">{weak.name}</p>
-                      <p className="text-[11px] text-slate-400 truncate">{weak.subjectName}</p>
+                      <p className="text-xs font-bold text-stone-200 truncate">{weak.name}</p>
+                      <p className="text-[11px] text-stone-400 truncate">{weak.subjectName}</p>
                     </div>
                     <button
                       onClick={() => onOpenTopic(weak.id)}
@@ -462,7 +488,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-slate-400 text-center py-3">
+              <p className="text-xs text-stone-400 text-center py-3">
                 No weak topics flagged! Keep taking practice drills to diagnose target areas.
               </p>
             )}

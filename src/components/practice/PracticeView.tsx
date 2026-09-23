@@ -263,7 +263,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `quiz_report_${subjectName.toLowerCase().replace(/\\s+/g, '_')}_${Date.now()}.md`;
+    link.download = `quiz_report_${subjectName.toLowerCase().replace(/\s+/g, '_')}_${Date.now()}.md`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -284,22 +284,22 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
       {!isQuizActive && !isQuizCompleted && (
         <div className="space-y-6">
           {/* Header Banner */}
-          <div className="p-6 md:p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="p-6 md:p-8 rounded-3xl bg-stone-900/80 border border-stone-800 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
             <div className="relative z-10 space-y-2">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-bold tracking-wide">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-red-300 text-xs font-bold tracking-wide">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>PRACTICE & MOCK TESTING</span>
               </div>
               <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
                 Practice Questions Engine
               </h1>
-              <p className="text-sm text-slate-300 max-w-2xl leading-relaxed">
+              <p className="text-sm text-stone-300 max-w-2xl leading-relaxed">
                 Configure customized practice sessions with real-time feedback, detailed explanations,
                 save-to-notes options, and automatic diagnostic tracking.
               </p>
               <div className="pt-1">
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-800 text-amber-300 border border-amber-500/30">
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-stone-800 text-amber-300 border border-amber-500/30">
                   NOTICE: All items are PRACTICE QUESTIONS created for BCA → MCA revision.
                 </span>
               </div>
@@ -307,15 +307,15 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
           </div>
 
           {/* Config Card */}
-          <div className="p-6 md:p-8 rounded-2xl bg-slate-900/80 border border-slate-800 shadow-xl space-y-6">
+          <div className="p-6 md:p-8 rounded-2xl bg-stone-900/80 border border-stone-800 shadow-xl space-y-6">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Filter className="w-5 h-5 text-indigo-400" />
+              <Filter className="w-5 h-5 text-red-400" />
               <span>Configure Your Practice Session</span>
             </h2>
 
             {/* Question Count Selector (10, 25, 50, 75) */}
             <div className="space-y-2.5">
-              <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+              <label className="text-xs font-bold text-stone-300 uppercase tracking-wider block">
                 Number of Questions
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -325,8 +325,8 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                     onClick={() => setQuestionCountLimit(cnt)}
                     className={`py-3 px-4 rounded-xl font-black text-sm border transition-all flex flex-col items-center ${
                       questionCountLimit === cnt
-                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-lg shadow-indigo-600/30 scale-[1.02]'
-                        : 'bg-slate-850 text-slate-300 border-slate-750 hover:border-slate-700'
+                        ? 'bg-red-600 text-white border-red-500 shadow-lg shadow-red-600/30 scale-[1.02]'
+                        : 'bg-stone-800/80 text-stone-300 border-stone-700 hover:border-stone-700'
                     }`}
                   >
                     <span className="text-lg">{cnt}</span>
@@ -338,13 +338,13 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
 
             {/* Subject Selector */}
             <div className="space-y-2.5">
-              <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+              <label className="text-xs font-bold text-stone-300 uppercase tracking-wider block">
                 Subject Scope
               </label>
               <select
                 value={selectedSubjectId}
                 onChange={(e) => setSelectedSubjectId(e.target.value)}
-                className="w-full bg-slate-950 text-white text-sm font-semibold px-4 py-3 rounded-xl border border-slate-750 focus:outline-none focus:border-indigo-500"
+                className="w-full bg-stone-950 text-white text-sm font-semibold px-4 py-3 rounded-xl border border-stone-700 focus:outline-none focus:border-red-500"
                 aria-label="Select subject for practice"
               >
                 <option value="all">All 9 Subjects (Full MCA Mock Mix)</option>
@@ -367,7 +367,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
 
             {/* Difficulty Selector */}
             <div className="space-y-2.5">
-              <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+              <label className="text-xs font-bold text-stone-300 uppercase tracking-wider block">
                 Difficulty Level
               </label>
               <div className="grid grid-cols-4 gap-2.5">
@@ -377,8 +377,8 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                     onClick={() => setSelectedDifficulty(diff as any)}
                     className={`py-2 px-3 rounded-xl font-bold text-xs border transition-all capitalize ${
                       selectedDifficulty === diff
-                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
-                        : 'bg-slate-850 text-slate-400 border-slate-750 hover:text-white'
+                        ? 'bg-red-600 text-white border-red-500 shadow-sm'
+                        : 'bg-stone-800/80 text-stone-400 border-stone-700 hover:text-white'
                     }`}
                   >
                     {diff === 'all' ? 'All Levels' : diff}
@@ -395,7 +395,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                   id="weak-toggle"
                   checked={onlyWeakTopics}
                   onChange={(e) => setOnlyWeakTopics(e.target.checked)}
-                  className="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 bg-slate-900 border-slate-700"
+                  className="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 bg-stone-900 border-stone-700"
                 />
                 <label
                   htmlFor="weak-toggle"
@@ -409,7 +409,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
             {/* Start Button */}
             <button
               onClick={startQuiz}
-              className="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-extrabold text-base shadow-xl shadow-indigo-600/30 transition-all hover:scale-[1.01]"
+              className="w-full py-4 rounded-2xl bg-gradient-to-r from-red-600 via-red-500 to-orange-500 hover:from-red-500 hover:to-orange-400 text-white font-extrabold text-base shadow-xl shadow-red-600/30 transition-all hover:scale-[1.01]"
             >
               Start Practice Session ({questionCountLimit} Questions) →
             </button>
@@ -421,24 +421,24 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
       {isQuizActive && currentQ && (
         <div className="space-y-6">
           {/* Quiz Top Bar */}
-          <div className="p-4 md:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 flex items-center justify-between shadow-xl">
+          <div className="p-4 md:p-5 rounded-2xl bg-stone-900/90 border border-stone-800 flex items-center justify-between shadow-xl">
             <div className="flex items-center gap-3">
-              <span className="px-2.5 py-1 rounded-md bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-bold">
+              <span className="px-2.5 py-1 rounded-md bg-red-500/15 border border-red-500/30 text-red-300 text-xs font-bold">
                 Question {currentQuestionIndex + 1} of {activeQuestions.length}
               </span>
-              <span className="hidden sm:inline text-xs text-slate-400 font-medium">
+              <span className="hidden sm:inline text-xs text-stone-400 font-medium">
                 {currentQ.subjectName}
               </span>
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-slate-300 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
-                <Clock className="w-3.5 h-3.5 text-indigo-400" />
+              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-stone-300 bg-stone-950 px-3 py-1.5 rounded-xl border border-stone-800">
+                <Clock className="w-3.5 h-3.5 text-red-400" />
                 <span>{formatTime(timeElapsedSeconds)}</span>
               </div>
               <button
                 onClick={finishQuiz}
-                className="text-xs text-slate-400 hover:text-rose-400 font-medium transition-colors"
+                className="text-xs text-stone-400 hover:text-rose-400 font-medium transition-colors"
               >
                 Quit Quiz
               </button>
@@ -446,9 +446,9 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
           </div>
 
           {/* Progress Bar */}
-          <div className="w-full bg-slate-800/80 rounded-full h-2 overflow-hidden">
+          <div className="w-full bg-stone-800/80 rounded-full h-2 overflow-hidden">
             <div
-              className="bg-gradient-to-r from-indigo-500 to-cyan-400 h-full transition-all duration-300"
+              className="bg-gradient-to-r from-red-500 to-orange-400 h-full transition-all duration-300"
               style={{
                 width: `${((currentQuestionIndex + 1) / activeQuestions.length) * 100}%`,
               }}
@@ -456,14 +456,14 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
           </div>
 
           {/* Question Card */}
-          <div className="p-6 md:p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-2xl space-y-6">
+          <div className="p-6 md:p-8 rounded-3xl bg-stone-900/80 border border-stone-800 shadow-2xl space-y-6">
             {/* Badges: PRACTICE QUESTION label + Type + Difficulty */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-800">
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-stone-800">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-black px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase tracking-wider">
+                <span className="text-[10px] font-black px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/30 uppercase tracking-wider">
                   PRACTICE QUESTION
                 </span>
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-400 uppercase">
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-stone-800 text-stone-400 uppercase">
                   {currentQ.type}
                 </span>
               </div>
@@ -487,7 +487,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
 
             {/* Optional Code snippet */}
             {currentQ.codeSnippet && (
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs text-emerald-300 overflow-x-auto">
+              <div className="p-4 rounded-xl bg-stone-950 border border-stone-800 font-mono text-xs text-emerald-300 overflow-x-auto">
                 <pre>{currentQ.codeSnippet}</pre>
               </div>
             )}
@@ -498,14 +498,14 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                 const isSelected = selectedAnswers[currentQ.id] === idx;
                 const isCorrect = idx === currentQ.correctOptionIndex;
 
-                let btnClass = 'bg-slate-850 hover:bg-slate-800 border-slate-750 text-slate-200';
+                let btnClass = 'bg-stone-800/80 hover:bg-stone-800 border-stone-700 text-stone-200';
                 if (isCurrentAnswered) {
                   if (isCorrect) {
                     btnClass = 'bg-emerald-500/20 border-emerald-500/50 text-emerald-200 font-bold';
                   } else if (isSelected) {
                     btnClass = 'bg-rose-500/20 border-rose-500/50 text-rose-200 font-bold';
                   } else {
-                    btnClass = 'bg-slate-900 border-slate-850 text-slate-400 opacity-60';
+                    btnClass = 'bg-stone-900 border-stone-800/80 text-stone-400 opacity-60';
                   }
                 }
 
@@ -517,7 +517,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                     className={`w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between text-sm ${btnClass}`}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-6 h-6 rounded-lg bg-slate-900 border border-slate-750 flex items-center justify-center font-bold text-xs text-slate-300 shrink-0">
+                      <span className="w-6 h-6 rounded-lg bg-stone-900 border border-stone-700 flex items-center justify-center font-bold text-xs text-stone-300 shrink-0">
                         {String.fromCharCode(65 + idx)}
                       </span>
                       <span>{option}</span>
@@ -536,7 +536,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
 
             {/* Answer & Explanation Reveal */}
             {isCurrentAnswered && (
-              <div className="p-5 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-3 animate-fadeIn">
+              <div className="p-5 rounded-2xl bg-stone-950/90 border border-stone-800 space-y-3 animate-fadeIn">
                 <div className="flex items-center gap-2 font-bold text-sm">
                   {selectedAnswers[currentQ.id] === currentQ.correctOptionIndex ? (
                     <span className="text-emerald-400 flex items-center gap-1.5">
@@ -547,20 +547,20 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                       <AlertTriangle className="w-4 h-4" /> Incorrect.
                     </span>
                   )}
-                  <span className="text-slate-400 text-xs font-normal">
+                  <span className="text-stone-400 text-xs font-normal">
                     (Correct Option: {String.fromCharCode(65 + currentQ.correctOptionIndex)})
                   </span>
                 </div>
 
-                <p className="text-xs text-slate-300 leading-relaxed">{currentQ.explanation}</p>
+                <p className="text-xs text-stone-300 leading-relaxed">{currentQ.explanation}</p>
 
-                <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                <div className="pt-2 border-t border-stone-800/80 flex items-center justify-between text-[11px] text-stone-400">
                   <span>
-                    Key Takeaway: <strong className="text-indigo-300">{currentQ.keyTakeaway}</strong>
+                    Key Takeaway: <strong className="text-red-300">{currentQ.keyTakeaway}</strong>
                   </span>
                   <button
                     onClick={() => onOpenTopic(currentQ.topicId)}
-                    className="text-indigo-400 hover:text-indigo-300 font-semibold"
+                    className="text-red-400 hover:text-red-300 font-semibold"
                   >
                     Review Topic →
                   </button>
@@ -575,8 +575,8 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                 disabled={!isCurrentAnswered}
                 className={`px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 transition-all ${
                   isCurrentAnswered
-                    ? 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30'
-                    : 'bg-slate-800 text-slate-400 cursor-not-allowed'
+                    ? 'bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30'
+                    : 'bg-stone-800 text-stone-400 cursor-not-allowed'
                 }`}
               >
                 <span>
@@ -593,13 +593,13 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
       {isQuizCompleted && (
         <div className="space-y-8 animate-fadeIn">
           {/* Main Scorecard */}
-          <div className="p-6 md:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl space-y-6 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-indigo-600/20 border border-indigo-500/40 text-indigo-400 mx-auto flex items-center justify-center">
+          <div className="p-6 md:p-8 rounded-3xl bg-stone-900/90 border border-stone-800 shadow-2xl space-y-6 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-red-600/20 border border-red-500/40 text-red-400 mx-auto flex items-center justify-center">
               <Award className="w-8 h-8" />
             </div>
 
             <div className="space-y-1">
-              <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">
+              <span className="text-xs font-bold text-red-400 uppercase tracking-wider">
                 Quiz Completed
               </span>
               <h2 className="text-2xl md:text-3xl font-black text-white">Performance Scorecard</h2>
@@ -613,14 +613,14 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
 
             {/* Score metrics */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-2 max-w-2xl mx-auto">
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
-                <div className="text-2xl font-black text-indigo-400">
+              <div className="p-4 rounded-xl bg-stone-950 border border-stone-800">
+                <div className="text-2xl font-black text-red-400">
                   {correctCount} / {activeQuestions.length}
                 </div>
-                <div className="text-[11px] text-slate-400 mt-1 uppercase font-semibold">Correct</div>
+                <div className="text-[11px] text-stone-400 mt-1 uppercase font-semibold">Correct</div>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="p-4 rounded-xl bg-stone-950 border border-stone-800">
                 <div
                   className={`text-2xl font-black ${
                     scorePercent >= 80
@@ -632,25 +632,25 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                 >
                   {scorePercent}%
                 </div>
-                <div className="text-[11px] text-slate-400 mt-1 uppercase font-semibold">Accuracy</div>
+                <div className="text-[11px] text-stone-400 mt-1 uppercase font-semibold">Accuracy</div>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="p-4 rounded-xl bg-stone-950 border border-stone-800">
                 <div className="text-2xl font-black text-amber-400">{formatTime(timeElapsedSeconds)}</div>
-                <div className="text-[11px] text-slate-400 mt-1 uppercase font-semibold">Time Spent</div>
+                <div className="text-[11px] text-stone-400 mt-1 uppercase font-semibold">Time Spent</div>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="p-4 rounded-xl bg-stone-950 border border-stone-800">
                 <div className="text-2xl font-black text-emerald-400">
                   {Math.round(timeElapsedSeconds / (activeQuestions.length || 1))}s
                 </div>
-                <div className="text-[11px] text-slate-400 mt-1 uppercase font-semibold">Per Question</div>
+                <div className="text-[11px] text-stone-400 mt-1 uppercase font-semibold">Per Question</div>
               </div>
             </div>
 
             {/* SAVE OPTIONS & ACTIONS BAR */}
-            <div className="pt-4 border-t border-slate-800/80 space-y-3">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
+            <div className="pt-4 border-t border-stone-800/80 space-y-3">
+              <span className="text-xs font-bold text-stone-400 uppercase tracking-wider block">
                 Save & Export Options
               </span>
 
@@ -661,7 +661,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                   className={`px-5 py-3 rounded-xl font-bold text-xs transition-all flex items-center gap-2 border ${
                     savedToNotes
                       ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-sm'
-                      : 'bg-indigo-600 hover:bg-indigo-500 text-white border-indigo-500 shadow-md shadow-indigo-600/25'
+                      : 'bg-red-600 hover:bg-red-500 text-white border-red-500 shadow-md shadow-red-600/25'
                   }`}
                 >
                   {savedToNotes ? (
@@ -680,17 +680,17 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                 {/* 2. Download / Export Report Button */}
                 <button
                   onClick={handleDownloadReport}
-                  className="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-200 hover:text-white font-bold text-xs border border-slate-700 transition-all flex items-center gap-2 shadow-sm"
+                  className="px-5 py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 hover:text-white font-bold text-xs border border-stone-700 transition-all flex items-center gap-2 shadow-sm"
                   title="Download Markdown summary with all questions and answers"
                 >
-                  <Download className="w-4 h-4 text-cyan-400" />
+                  <Download className="w-4 h-4 text-orange-400" />
                   <span>Download Report (.md)</span>
                 </button>
 
                 {/* 3. Retry Quiz Button */}
                 <button
                   onClick={startQuiz}
-                  className="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-200 hover:text-white font-bold text-xs border border-slate-700 transition-all flex items-center gap-2"
+                  className="px-5 py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 hover:text-white font-bold text-xs border border-stone-700 transition-all flex items-center gap-2"
                 >
                   <RotateCcw className="w-4 h-4 text-amber-400" />
                   <span>Retry Quiz</span>
@@ -702,7 +702,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                     setIsQuizCompleted(false);
                     setIsQuizActive(false);
                   }}
-                  className="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-200 hover:text-white text-xs font-semibold border border-slate-700 transition-all"
+                  className="px-5 py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 hover:text-white text-xs font-semibold border border-stone-700 transition-all"
                 >
                   Configure New
                 </button>
@@ -717,26 +717,26 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
           </div>
 
           {/* DETAILED QUESTION-BY-QUESTION REVIEW SECTION */}
-          <div className="p-6 md:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+          <div className="p-6 md:p-8 rounded-3xl bg-stone-900/90 border border-stone-800 shadow-2xl space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-stone-800">
               <div>
                 <h3 className="text-lg font-black text-white flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-indigo-400" />
+                  <FileText className="w-5 h-5 text-red-400" />
                   <span>Question Review & Answer Key</span>
                 </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <p className="text-xs text-stone-400 mt-0.5">
                   Review your answers, correct options, and study explanations for each question.
                 </p>
               </div>
 
               {/* Filter Tabs */}
-              <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs self-start sm:self-auto">
+              <div className="flex items-center gap-1.5 bg-stone-950 p-1 rounded-xl border border-stone-800 text-xs self-start sm:self-auto">
                 <button
                   onClick={() => setReviewFilter('all')}
                   className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
                     reviewFilter === 'all'
-                      ? 'bg-indigo-600 text-white'
-                      : 'text-slate-400 hover:text-white'
+                      ? 'bg-red-600 text-white'
+                      : 'text-stone-400 hover:text-white'
                   }`}
                 >
                   All ({activeQuestions.length})
@@ -746,7 +746,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                   className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
                     reviewFilter === 'incorrect'
                       ? 'bg-rose-600 text-white'
-                      : 'text-slate-400 hover:text-rose-400'
+                      : 'text-stone-400 hover:text-rose-400'
                   }`}
                 >
                   Incorrect ({incorrectCount})
@@ -756,7 +756,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                   className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
                     reviewFilter === 'correct'
                       ? 'bg-emerald-600 text-white'
-                      : 'text-slate-400 hover:text-emerald-400'
+                      : 'text-stone-400 hover:text-emerald-400'
                   }`}
                 >
                   Correct ({correctCount})
@@ -776,20 +776,20 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                     key={q.id}
                     className={`p-5 md:p-6 rounded-2xl border transition-all space-y-4 ${
                       isCorrect
-                        ? 'bg-slate-950/60 border-emerald-500/20'
-                        : 'bg-slate-950/80 border-rose-500/25 ring-1 ring-rose-500/10'
+                        ? 'bg-stone-950/60 border-emerald-500/20'
+                        : 'bg-stone-950/80 border-rose-500/25 ring-1 ring-rose-500/10'
                     }`}
                   >
                     {/* Header */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-850">
+                    <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-stone-800/80">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-slate-300">
+                        <span className="text-xs font-bold text-stone-300">
                           Question {originalIndex}
                         </span>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-400 uppercase">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-stone-800 text-stone-400 uppercase">
                           {q.type}
                         </span>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-300">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-red-500/15 text-red-300">
                           {q.subjectName}
                         </span>
                       </div>
@@ -812,7 +812,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                     </h4>
 
                     {q.codeSnippet && (
-                      <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs text-emerald-300 overflow-x-auto">
+                      <div className="p-3.5 rounded-xl bg-stone-900 border border-stone-800 font-mono text-xs text-emerald-300 overflow-x-auto">
                         <pre>{q.codeSnippet}</pre>
                       </div>
                     )}
@@ -823,7 +823,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                         const isChosen = userChoice === oIdx;
                         const isTheCorrect = oIdx === q.correctOptionIndex;
 
-                        let rowStyle = 'bg-slate-900/60 border-slate-850 text-slate-400';
+                        let rowStyle = 'bg-stone-900/60 border-stone-800/80 text-stone-400';
                         if (isTheCorrect) {
                           rowStyle = 'bg-emerald-500/15 border-emerald-500/40 text-emerald-200 font-bold';
                         } else if (isChosen && !isTheCorrect) {
@@ -836,7 +836,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                             className={`p-3 rounded-xl border text-xs flex items-center justify-between transition-colors ${rowStyle}`}
                           >
                             <div className="flex items-center gap-2.5">
-                              <span className="w-5 h-5 rounded-md bg-slate-950 flex items-center justify-center font-bold text-[10px] text-slate-300">
+                              <span className="w-5 h-5 rounded-md bg-stone-950 flex items-center justify-center font-bold text-[10px] text-stone-300">
                                 {String.fromCharCode(65 + oIdx)}
                               </span>
                               <span>{opt}</span>
@@ -860,19 +860,19 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
                     </div>
 
                     {/* Explanation Box */}
-                    <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-1.5">
-                      <div className="font-bold text-indigo-300 flex items-center gap-1.5">
+                    <div className="p-4 rounded-xl bg-stone-900/90 border border-stone-800 text-xs space-y-1.5">
+                      <div className="font-bold text-red-300 flex items-center gap-1.5">
                         <HelpCircle className="w-3.5 h-3.5" />
                         <span>Explanation & Concept Takeaway:</span>
                       </div>
-                      <p className="text-slate-300 leading-relaxed">{q.explanation}</p>
-                      <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                      <p className="text-stone-300 leading-relaxed">{q.explanation}</p>
+                      <div className="pt-2 border-t border-stone-800 flex items-center justify-between text-[11px] text-stone-400">
                         <span>
-                          Takeaway: <strong className="text-slate-200">{q.keyTakeaway}</strong>
+                          Takeaway: <strong className="text-stone-200">{q.keyTakeaway}</strong>
                         </span>
                         <button
                           onClick={() => onOpenTopic(q.topicId)}
-                          className="text-indigo-400 hover:text-indigo-300 font-semibold"
+                          className="text-red-400 hover:text-red-300 font-semibold"
                         >
                           Revise {q.topicName} →
                         </button>
@@ -883,7 +883,7 @@ export const PracticeView: React.FC<PracticeViewProps> = ({
               })}
 
               {reviewQuestions.length === 0 && (
-                <div className="p-6 text-center text-slate-400 text-xs">
+                <div className="p-6 text-center text-stone-400 text-xs">
                   No questions match the current filter.
                 </div>
               )}

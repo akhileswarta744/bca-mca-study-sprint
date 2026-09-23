@@ -35,7 +35,7 @@ export function AppContent() {
   };
 
   return (
-    <div className="flex h-screen bg-[#090d16] text-slate-100 overflow-hidden font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
+    <div className="flex h-screen bg-[#0f0a09] text-stone-100 overflow-hidden font-sans selection:bg-red-500/30 selection:text-red-200">
       {/* Desktop Sidebar */}
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
