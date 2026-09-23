@@ -34,19 +34,6 @@ interface ProgressContextType extends AppState {
 }
 
 const getInitialState = (): AppState => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      // Validate structure
-      if (parsed && typeof parsed.currentDay === 'number') {
-        return parsed;
-      }
-    }
-  } catch (e) {
-    console.error('Failed to load study sprint progress from localStorage', e);
-  }
-
   // Default clean state
   const initialTopicStatus: Record<string, TopicStatus> = {};
   TOPICS_META.forEach((t, index) => {
@@ -58,7 +45,7 @@ const getInitialState = (): AppState => {
     }
   });
 
-  return {
+  const defaultState: AppState = {
     currentDay: 1,
     topicStatus: initialTopicStatus,
     dayTasksCompleted: {},
@@ -71,6 +58,36 @@ const getInitialState = (): AppState => {
       lastActiveDate: new Date().toISOString().split('T')[0],
     },
   };
+
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // Validate structure and safely merge
+      if (parsed && typeof parsed === 'object') {
+        return {
+          ...defaultState,
+          ...parsed,
+          topicStatus: {
+            ...initialTopicStatus,
+            ...(parsed.topicStatus || {}),
+          },
+          userNotes: Array.isArray(parsed.userNotes) && parsed.userNotes.length > 0
+            ? parsed.userNotes
+            : INITIAL_NOTES,
+          quizHistory: Array.isArray(parsed.quizHistory) ? parsed.quizHistory : [],
+          weakTopics: Array.isArray(parsed.weakTopics) ? parsed.weakTopics : defaultState.weakTopics,
+          dayTasksCompleted: parsed.dayTasksCompleted || {},
+          interviewRatings: parsed.interviewRatings || {},
+          streak: parsed.streak || defaultState.streak,
+        };
+      }
+    }
+  } catch (e) {
+    console.error('Failed to load study sprint progress from localStorage', e);
+  }
+
+  return defaultState;
 };
 
 const ProgressContext = createContext<ProgressContextType | undefined>(undefined);

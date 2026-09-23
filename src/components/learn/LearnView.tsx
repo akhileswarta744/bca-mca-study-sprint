@@ -44,6 +44,7 @@ export const LearnView: React.FC<LearnViewProps> = ({
   const [selectedPracticeAnswers, setSelectedPracticeAnswers] = useState<Record<string, number>>({});
   const [showPracticeExplanations, setShowPracticeExplanations] = useState<Record<string, boolean>>({});
   const [savedNoteNotification, setSavedNoteNotification] = useState(false);
+  const [statusSaveToast, setStatusSaveToast] = useState<string | null>(null);
 
   // Sync if prop changes
   React.useEffect(() => {
@@ -68,6 +69,25 @@ export const LearnView: React.FC<LearnViewProps> = ({
     setShowPracticeExplanations((prev) => ({ ...prev, [questionId]: true }));
   };
 
+  const handleStatusChange = (newStatus: TopicStatus) => {
+    updateTopicStatus(currentTopicMeta.id, newStatus);
+    const label = newStatus === 'completed' ? 'Completed ✓' : newStatus === 'in_progress' ? 'In Progress ⏳' : 'Not Started';
+    setStatusSaveToast(`Progress Saved: Marked as ${label}`);
+    setTimeout(() => setStatusSaveToast(null), 3000);
+  };
+
+  const handleCompleteAndNext = () => {
+    updateTopicStatus(currentTopicMeta.id, 'completed');
+    setStatusSaveToast('Topic marked as Completed! Saved to your progress.');
+    setTimeout(() => {
+      setStatusSaveToast(null);
+      if (nextTopic) {
+        setSelectedTopicId(nextTopic.id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 600);
+  };
+
   const handleQuickSaveNote = () => {
     if (!content) return;
     saveNote({
@@ -84,13 +104,21 @@ export const LearnView: React.FC<LearnViewProps> = ({
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto pb-20">
+      {/* Toast Alert for Status & Note Saving */}
+      {(statusSaveToast || savedNoteNotification) && (
+        <div className="fixed top-5 right-5 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs shadow-2xl shadow-emerald-500/30 animate-bounce">
+          <CheckCircle2 className="w-4 h-4 text-slate-950" />
+          <span>{statusSaveToast || 'Saved to your personal notes!'}</span>
+        </div>
+      )}
+
       {/* Top Navigation & Status Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 md:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl">
         <div className="flex items-center gap-3">
           <select
             value={selectedTopicId}
             onChange={(e) => setSelectedTopicId(e.target.value)}
-            className="bg-slate-950 text-white font-bold text-sm px-3.5 py-2 rounded-xl border border-slate-700/80 focus:outline-none focus:border-indigo-500 max-w-xs md:max-w-md truncate"
+            className="bg-slate-950 text-white font-bold text-sm px-3.5 py-2.5 rounded-xl border border-slate-700/80 focus:outline-none focus:border-indigo-500 max-w-xs md:max-w-md truncate"
             aria-label="Select study topic"
           >
             {TOPICS_META.map((t) => (
@@ -101,34 +129,46 @@ export const LearnView: React.FC<LearnViewProps> = ({
           </select>
         </div>
 
-        {/* Status selector & Action buttons */}
-        <div className="flex items-center gap-2.5 flex-wrap">
-          <select
-            value={currentStatus}
-            onChange={(e) => updateTopicStatus(currentTopicMeta.id, e.target.value as TopicStatus)}
-            className={`text-xs font-bold px-3 py-2 rounded-xl border focus:outline-none cursor-pointer ${
-              currentStatus === 'completed'
-                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                : currentStatus === 'in_progress'
-                ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                : 'bg-slate-800 text-slate-300 border-slate-700'
-            }`}
-            aria-label="Change current topic status"
-          >
-            <option value="not_started" className="bg-slate-900 text-slate-300">
+        {/* Status Selector Buttons & Save Note Action */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center rounded-xl bg-slate-950 p-1 border border-slate-800">
+            <button
+              onClick={() => handleStatusChange('not_started')}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                currentStatus === 'not_started'
+                  ? 'bg-slate-800 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
               Not Started
-            </option>
-            <option value="in_progress" className="bg-slate-900 text-amber-300">
-              In Progress
-            </option>
-            <option value="completed" className="bg-slate-900 text-emerald-300">
-              Mark Completed
-            </option>
-          </select>
+            </button>
+            <button
+              onClick={() => handleStatusChange('in_progress')}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 ${
+                currentStatus === 'in_progress'
+                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                  : 'text-slate-400 hover:text-amber-300'
+              }`}
+            >
+              <Clock className="w-3 h-3" />
+              <span>In Progress</span>
+            </button>
+            <button
+              onClick={() => handleStatusChange('completed')}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 ${
+                currentStatus === 'completed'
+                  ? 'bg-emerald-500 text-slate-950 font-bold shadow-sm shadow-emerald-500/20'
+                  : 'text-slate-400 hover:text-emerald-300'
+              }`}
+            >
+              <Check className="w-3 h-3" />
+              <span>Completed</span>
+            </button>
+          </div>
 
           <button
             onClick={handleQuickSaveNote}
-            className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all"
+            className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm"
             title="Save quick summary to your personal notes"
           >
             <StickyNote className="w-3.5 h-3.5 text-rose-400" />
@@ -493,13 +533,52 @@ export const LearnView: React.FC<LearnViewProps> = ({
               })}
             </div>
           </section>
+
+          {/* Topic Completion Action Banner */}
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 to-indigo-950/40 border border-slate-800 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-1 text-center sm:text-left">
+              <div className="flex items-center justify-center sm:justify-start gap-2">
+                <span className="text-sm font-bold text-white">Finished revising this topic?</span>
+                {currentStatus === 'completed' && (
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-500/30">
+                    Completed ✓
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-slate-400">
+                Mark it completed to update your 16-day syllabus streak and syllabus coverage.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              {currentStatus !== 'completed' ? (
+                <button
+                  onClick={handleCompleteAndNext}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 transition-all cursor-pointer"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Mark as Completed {nextTopic ? '& Next Topic' : ''}</span>
+                </button>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-emerald-400">Saved to Progress!</span>
+                  <button
+                    onClick={() => handleStatusChange('in_progress')}
+                    className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold transition-all"
+                  >
+                    Reopen Topic
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       ) : (
         <div className="p-8 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-3">
-          <BookOpen className="w-10 h-10 text-slate-400 mx-auto" />
-          <h3 className="text-lg font-bold text-white">Full Syllabus Lesson Available</h3>
+          <BookOpen className="w-10 h-10 text-indigo-400 mx-auto" />
+          <h3 className="text-lg font-bold text-white">Syllabus Topic Overview</h3>
           <p className="text-sm text-slate-400 max-w-md mx-auto">
-            This topic is part of your intensive 16-day schedule. Pick any topic from the selector above to read detailed 10-part lessons.
+            Review key concepts, definitions, and practice questions for this topic.
           </p>
         </div>
       )}
