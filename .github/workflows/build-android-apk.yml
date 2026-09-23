@@ -31,9 +31,14 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: 'gradle'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Setup Android SDK Environment
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> $GITHUB_ENV
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-35" "build-tools;35.0.0" || true
 
       - name: Sync Capacitor Android
         run: npx cap sync android
@@ -44,12 +49,13 @@ jobs:
       - name: Build Debug APK with Gradle
         run: |
           cd android
-          ./gradlew assembleDebug --stacktrace
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
-      - name: Locate & Rename APK
+      - name: Locate & Prepare APK
         run: |
           mkdir -p build-artifacts
-          cp android/app/build/outputs/apk/debug/app-debug.apk build-artifacts/BCA-MCA-Study-Sprint.apk
+          find android/app/build/outputs/apk -name "*.apk" -exec cp {} build-artifacts/BCA-MCA-Study-Sprint.apk \;
+          ls -la build-artifacts/
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
